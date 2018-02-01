@@ -17,15 +17,24 @@ Route::group(['middleware' => 'web'], function () {
 });
 // Frontend routes
 Route::group(['middleware' => 'auth', 'namespace' => 'Frontend'], function () {
-
+	
+	//Home
 	Route::get('/', 'HomeController@index')->name('home');
+	
+	//Profile
 	Route::get('/perfil', 'ProfileController@index')->name('profile');
-	Route::post('/perfil/pago/editar', 'ProfileController@update')->name('profile/payment/update');
-	Route::get('/perfil/pago/agregar', 'ProfileController@createPayment')->name('profile/payment/add');
-	Route::post('/perfil/pago/agregar', 'ProfileController@storePayment')->name('profile/payment/store');
-	Route::get('/perfil/pago/detalle/{id}', 'ProfileController@paymentDetail')->name('profile/payment/detail');
-	Route::get('/perfil/pago/descargar/{id}', 'ProfileController@downloadPDF')->name('profile/payment/download');
-
+	Route::post('/perfil', 'ProfileController@update')->name('profile');
+	Route::get('/perfil/cambiar-contrasena', 'ProfileController@editPassword')->name('profile/update-password');
+	Route::post('/perfil/cambiar-contrasena', 'ProfileController@updatePassword')->name('profile/update-password');
+	
+	//Payments
+	Route::get('/pagos', 'PaymentsController@index')->name('payments');
+	Route::get('/pago/agregar', 'PaymentsController@create')->name('payment/create');
+	Route::post('/pago/agregar', 'PaymentsController@store')->name('payment/create');
+	Route::get('/pago/detalle/{id}', 'PaymentsController@detail')->name('payment/detail');
+	Route::get('/pago/descargar/{id}', 'PaymentsController@downloadPDF')->name('payment/download');
+	
+	
 
 });
 
@@ -37,12 +46,14 @@ Route::group(['middleware' => 'admin', 'namespace' => 'Backend'], function () {
 
 	//Payments
 	Route::get('/admin/pagos', 'PaymentController@index')->name('admin/payments');
+	Route::post('/admin/pagos', 'PaymentController@filteredIndex')->name('admin/payments');
 	Route::get('/admin/pagos/{id}', 'PaymentController@detail')->name('admin/payments/');
 	Route::get('/admin/pagos/aprobar/{id}', 'PaymentController@approve')->name('admin/payments/approve/');
 	Route::get('/admin/pagos/rechazar/{id}', 'PaymentController@reject')->name('admin/payments/reject/');
 
 	//Users
 	Route::get('/admin/usuarios','UserController@index')->name('admin/users');
+	Route::post('/admin/usuarios','UserController@filteredUsers')->name('admin/users');
 	Route::get('/admin/usuarios/agregar','UserController@create')->name('admin/users/create');	
 	Route::get('/admin/usuarios/{id}','UserController@detail')->name('admin/users/');
 	Route::get('/admin/usuarios/editar/{id}','UserController@edit')->name('admin/users/edit/');

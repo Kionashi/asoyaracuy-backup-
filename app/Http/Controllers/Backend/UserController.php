@@ -20,14 +20,30 @@ class UserController extends BackendController
      */
     public function index()
     {	
-
+        
         $users = User::where('status','ENABLED')->get();
+            
         return $this->view('pages.backend.users.index')
             ->with('users',$users)
         ;
     }
 
-
+    public function filteredUsers(Request $request) {
+        $filter = $request->get('filter');
+        switch ($filter) {
+            case 'debtors':
+                $users = User::where('status','ENABLED')
+                    ->where('balance','<',0)
+                    ->get()
+                    ;
+                break;
+            
+            default:
+        }
+        return $this->view('pages.backend.users.index')
+            ->with('users',$users)
+        ;
+    }
 
 
     public function create()

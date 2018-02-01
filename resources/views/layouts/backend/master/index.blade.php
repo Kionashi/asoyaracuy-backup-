@@ -414,5 +414,6 @@
 		{!!Html::script('backend/js/dashboard.js')!!}
 		<!-- AdminLTE for demo purposes -->
 		{!!Html::script('backend/js/demo.js')!!}
+		@yield('custom_script')
     </body>
 </html>

@@ -10,7 +10,7 @@
         <small>Panel de Administración</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
         <li class="active">Panel de control</li>
       </ol>
     </section>
@@ -36,7 +36,7 @@
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-green">
+          <div class="small-box bg-red">
             <div class="inner">
               <h3>{{$debtorsCount}}<sup style="font-size: 20px"></sup></h3>
 
@@ -45,7 +45,10 @@
             <div class="icon">
               <i class="ion ion-stats-bars"></i>
             </div>
-            <a href="{{route('admin/payments')}}" class="small-box-footer">M&aacute;s info <i class="fa fa-arrow-circle-right"></i></a>
+            {!! Form::open(array('route' => 'admin/users','id' => 'debtorsForm')) !!}
+            {!! Form::hidden('filter','debtors') !!}
+            {!! Form::close() !!}
+            <a class="small-box-footer" style="cursor: pointer;" id="debtors">M&aacute;s info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -66,16 +69,19 @@
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-red">
+          <div class="small-box bg-green">
             <div class="inner">
-              <h3>65</h3>
+              <h3>{{$paymentsCount}}</h3>
 
-              <p>Unique Visitors</p>
+              <p>Pagos Pendientes</p>
             </div>
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
             </div>
-            <a href="#" class="small-box-footer">M&aacute;s info <i class="fa fa-arrow-circle-right"></i></a>
+            {!! Form::open(array('route' => 'admin/payments','id' => 'pendingPaymentsForm')) !!}
+            {!! Form::hidden('filter','pending') !!}
+            {!! Form::close() !!}
+            <a class="small-box-footer" style="cursor: pointer;" id="pendingPayments">M&aacute;s info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -314,4 +320,18 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+@endsection
+@section('custom_script')
+  <script type="text/javascript">
+    $(document).ready(function(){
+      
+      $('#debtors').click(function(){
+        $('#debtorsForm').submit();
+      });
+      $('#pendingPayments').click(function(){
+        $('#pendingPaymentsForm').submit();
+      });
+      
+    });
+  </script>
 @endsection

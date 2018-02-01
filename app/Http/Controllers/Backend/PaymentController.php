@@ -24,6 +24,33 @@ class PaymentController extends BackendController
         ;
     }
 
+    public function filteredIndex(Request $request) {
+        
+        $filter = $request->filter;
+        switch ($filter) {
+            case 'dates':
+                $startingDate = $request->startingDate;
+                $endingDate = $request->endingDate;
+                $payments = Payment::where('user_status','ENABLED')
+                    ->where('date','<',$endingDate)
+                    ->where('date','>',$startingDate)
+                    ->get()
+                    ;
+                break;
+            case 'pending':
+                $payments = Payment::where('user_status','ENABLED')
+                    ->where('status','PENDING')
+                    ->get()
+                    ;
+                break;
+            default:
+                $payments = Payment::where('user_status','ENABLED')->get();
+                break;
+        }
+        return $this->view('pages.backend.payments.index')
+            ->with('payments',$payments)
+        ;
+    }
     
     public function detail($id) {
         $payment = Payment::find($id);

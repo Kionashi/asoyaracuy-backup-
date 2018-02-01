@@ -14,7 +14,21 @@
 		</ol>
 	</section>
 	<!-- Main content -->
-	<section class="content">
+			<div class="col-md-12" style="margin-top: 1em;">
+				{!!Form::open(array('route'=> 'admin/payments')) !!}
+				{!!Form::hidden('filter','dates')!!}
+				<div class="col-md-4"> 
+					{!! Form::date('startingDate',null,array('class' => 'form-control', 'id' => 'startingDate')) !!}
+				</div>
+				<div class="col-md-4">
+					{!! Form::date('endingDate',null,array('class' => 'form-control','id' => 'endingDate')) !!}
+				</div>
+				<div class="col-md-4">
+					<button class="btn btn-danger" type="submit" id="paymentsByDate">Filtrar por fechas</button>
+				</div>
+				{!!Form::close() !!}
+			</div>
+	<section class="content col-md-12">
 		<div class="table-responsive">
 		  	<table class="table">
 		    	<thead>
@@ -35,9 +49,23 @@
 		    	<tr>
 				  <td>{{ $i++ }}</td>
 				  <td>{{ $payment->user->house }}</td>
-				  <td>{{ $payment->type }}</td>
+				  <td>
+				  	@if($payment->type == 'DEPOSIT')
+						Deposito
+					@else()
+						Transferencia
+					@endif
+				  </td>
 				  <td>{{ $payment->bank }}</td>
-				  <td>{{ $payment->status }}</td>
+				  <td>
+				  	@if($payment->status == 'PENDING')
+						En revisión
+					@elseif($payment->status == 'APPROVED')
+						Aprobado
+					@elseif($payment->status == 'REJECTED')
+						Rechazado
+				@endif
+				  </td>
 				  <td>{{ $payment->confirmation_code }}</td>
 				  <td>{{ $payment->date }}</td>
 				  <td>{{ $payment->amount }}</td>
@@ -90,3 +118,4 @@
     </script>
 </div>
 @endsection
+
