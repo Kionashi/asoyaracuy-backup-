@@ -39,7 +39,7 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Frontend'], function () {
 });
 
 //Backend
-Route::group(['middleware' => 'admin', 'namespace' => 'Backend'], function () {
+Route::group([ 'namespace' => 'Backend'], function () {
 
 	//Dashboard
 	Route::get('/admin', 'DashboardController@index')->name('admin');
@@ -55,6 +55,7 @@ Route::group(['middleware' => 'admin', 'namespace' => 'Backend'], function () {
 	Route::get('/admin/usuarios','UserController@index')->name('admin/users');
 	Route::post('/admin/usuarios','UserController@filteredUsers')->name('admin/users');
 	Route::get('/admin/usuarios/agregar','UserController@create')->name('admin/users/create');	
+	Route::post('/admin/usuarios/agregar','UserController@store')->name('admin/users/create');	
 	Route::get('/admin/usuarios/{id}','UserController@detail')->name('admin/users/');
 	Route::get('/admin/usuarios/editar/{id}','UserController@edit')->name('admin/users/edit/');
 	Route::post('/admin/usuarios/editar','UserController@update')->name('admin/users/update');
