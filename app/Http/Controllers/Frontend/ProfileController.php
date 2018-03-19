@@ -42,24 +42,41 @@ class ProfileController extends AsoyaracuyController
 
     public function update(Request $request)
 	{
-        // Validate
-        $validation = Validator::make($request->all(),$this->profileValidationRules);
-        if($validation->fails()){
+  //       // Validate
+  //       $validation = Validator::make($request->all(),$this->profileValidationRules);
+  //       if($validation->fails()){
     
-            return redirect()->back()->withInput()->withErrors($validation->messages());
-        }
-        // dump('entre');die;
+  //           return redirect()->back()->withInput()->withErrors($validation->messages());
+  //       }
+  //       // dump('entre');die;
         
-		$user = Auth::user();
+		// $user = Auth::user();
 
-		$user->email = $request->get('email');
-		$user->phone = $request->get('phone');
+		// $user->email = $request->get('email');
+		// $user->phone = $request->get('phone');
 		
-		if($request->get('password') ) {
-			$user->password = bcrypt($request->get('password'));
+		// if($request->get('password') ) {
+		// 	$user->password = bcrypt($request->get('password'));
+  //       }
+
+		// $user->save();
+        
+         // $id = $request->get('id');
+
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|max:255',
+            'phone' => 'required'
+            ]);
+
+        if($validator->fails()){
+            return redirect(route('profile'))->withInput()->withErrors($validator);
         }
 
-		$user->save();
+        $user = Auth::user();
+        $user->email = $request->get('email');
+        $user->phone = $request->get('phone');
+
+        $user->save();
 		return redirect(route('profile'));
 	}
     

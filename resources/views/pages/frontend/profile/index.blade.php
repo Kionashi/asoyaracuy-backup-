@@ -7,6 +7,7 @@
         <h3>Actualizar datos</h3>
         {!! Form::open(['route' => 'profile']) !!}				
 		<input type="hidden" name="_token" value="{{ csrf_token() }}">
+		{!! Form::hidden('id',$user->id) !!}
 		<div id="customer_details" class="col2-set">
 			<div class="col-1">
 				<div class="woocommerce-billing-fields">

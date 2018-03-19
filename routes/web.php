@@ -39,7 +39,7 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Frontend'], function () {
 });
 
 //Backend
-Route::group([ 'namespace' => 'Backend'], function () {
+Route::group(['middleware' => 'isAdmin', 'namespace' => 'Backend'], function () {
 
 	//Dashboard
 	Route::get('/admin', 'DashboardController@index')->name('admin');
