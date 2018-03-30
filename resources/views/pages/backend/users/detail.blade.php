@@ -22,9 +22,19 @@
 			<div class="panel-body"><span>Quinta: </span>{{$user->house}}</div>
 			<div class="panel-body"><span>Tel&eacute;fono: </span>{{$user->phone}}</div>
 			<div class="panel-body"><span>Email: </span>{{$user->email}}</div>
-			<div class="panel-body"><span>Rol: </span>{{$user->role}}</div>
+			<div class="panel-body"><span>Rol: </span>
+				@if($user->role == 'USER')
+                    Usuarios
+                @elseif($user->role == 'DIRECTIVE')
+                    Directivo
+                @elseif($user->role == 'ADMIN')
+                    Administrador
+                @else
+                    {{ $user->role }}
+                @endif
+			</div>
 			@if(isset($specialFee))
-			<div class="panel-body"><span>Cuota especial: </span>{{$specialFee->amount}}</div>	
+				<div class="panel-body"><span>Cuota especial: </span>{{$specialFee->amount}}</div>	
 			@endif
 		</div>
 		

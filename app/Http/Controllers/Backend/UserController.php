@@ -78,16 +78,29 @@ class UserController extends BackendController
     
             return redirect()->back()->withInput()->withErrors($validation->messages());
         }
-    
+        
+        // Create user
         User::create([
-                'balance' => 0,
-                'email' => $request->get('email'),
-                'house' => $request->get('house'),
-                'password' => bcrypt($request->get('password')),
-                'phone' => $request->get('phone'),
-                'status' => 'ENABLED',
-                'role' => $request->get('role'),
+            'balance' => 0,
+            'email' => $request->get('email'),
+            'house' => $request->get('house'),
+            'password' => bcrypt($request->get('password')),
+            'phone' => $request->get('phone'),
+            'status' => 'ENABLED',
+            'role' => $request->get('role'),
         ]);
+        // Store Audit
+        $role = '';
+        if($request->get('role') == 'USER')
+            $role = 'Usuarios';
+        else if ($request->get('role') == 'DIRECTIVE') 
+            $role = 'Directivo';
+        else if($request->get('role') == 'ADMIN')
+            $role = 'Administrador';
+        }
+        $this->storeAudit('Crear usuario', 'Usuario creado ' . $request->get('house') . ' con rol '. $role, $request->ip());
+
+        // Create reponse
         $response = 'Usuario creado exitosamente';
         /*
          $Autorid = Auth::id();

@@ -21,4 +21,20 @@ class BackendController extends Controller
             ->with('paymentsCount',$paymentsCount);
         ;
     }
+    
+    public function storeAudit($action, $details, $ip) {
+        // Get logged user 
+        $user = Auth::user();
+        
+        // Create audit
+        $audit = new Audit();
+        $audit->action = $action;
+        $audit->details = $details;
+        $audit->ipAddress = $ip;
+        $audit->user_id = $user->id;
+        
+        // Store audit
+        $audit->save();
+        
+    }
 }

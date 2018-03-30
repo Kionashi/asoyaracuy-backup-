@@ -28,9 +28,18 @@ h5,
 h6 {
     margin: 0 0 15px;
 }
-body { font-family:Arial, Helvetica, sans-serif; }
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    min-height: 100%;
+}
 
-
+#footer {
+    clear: both;
+    position: relative;
+    z-index: 10;
+    height: 3em;
+    margin-top: -3em;
+}
 
 .header-area {
     background: none repeat scroll 0 0 #f4f4f4;
